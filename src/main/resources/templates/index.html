@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JSEncrypt Example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.bootcss.com/jsencrypt/2.3.1/jsencrypt.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h2>登陆测试</h2>
+    <input id="username" value="admin"/><br/>
+    <input id="password" value="123456"/><br/>
+    <input id="loginBtn" type="button" value="Login"/><br/>
+</div>
+<script type="text/javascript">
+
+    const publicKy = `MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDN8TOImaRCdDPKCuPUgX1d+U8R4LryYUKP9OqrwNF4fcLv6Y8DBXzGNXWLyFCPPCaN+bj5kYVBOsDPZP5BEj/8NJqpXs5EaNO5hsTUqM+cJMK2OqF1W+S950X2y40wXojJ3u7I7yP7jESpW719dBXcKVT6fepHhfcJFKzJQUSIKwIDAQAB`;
+
+    const btn = document.getElementById("loginBtn");
+
+    btn.onclick = function () {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        console.log(username, password);
+
+        // Encrypt with the public key...
+        const encrypt = new JSEncrypt();
+        encrypt.setPublicKey(publicKy);
+        const encryptedPwd = encrypt.encrypt(password);
+        console.log(encryptedPwd);
+        //
+        // // Decrypt with the private key...
+        // const decrypt = new JSEncrypt();
+        // decrypt.setPrivateKey(privateKey);
+        // const uncrypted = decrypt.decrypt(encrypted);
+        const formData = new FormData();
+        formData.append("username", username);
+        formData.append("password", encryptedPwd);
+        fetch("http://localhost:8080/api/login", {
+            method: "POST",
+
+            body: formData,
+        }).then(res => res.json())
+            .then(res => {
+                console.info(res);
+                if (res && res.code == "200") {
+                    alert("解密密码为：" + res.password);
+                } else {
+                    alert(JSON.stringify(res));
+                }
+            });
+    }
+</script>
+</body>
+</html>
