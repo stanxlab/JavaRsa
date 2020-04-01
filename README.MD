@@ -49,13 +49,15 @@
 ```
 
 ## 本地生成公钥密钥
-```sql
-cd ~/.ssh
-
+```shell script
 openssl genrsa -out rsa_1024_priv.pem 1024
 
 openssl rsa -pubout -in rsa_1024_priv.pem -out rsa_1024_pub.pem
 
+# 查看私钥
+cat rsa_1024_priv.pem
+# 查看公钥
+cat rsa_1024_pub.pem
 ```
 
 
