@@ -4,7 +4,8 @@
     <title>JSEncrypt Example</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.bootcss.com/jsencrypt/2.3.1/jsencrypt.min.js"></script>
+<!--    <script src="https://cdn.bootcss.com/jsencrypt/2.3.1/jsencrypt.min.js"></script>-->
+    <script src="/jsencrypt.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -29,17 +30,12 @@
         encrypt.setPublicKey(publicKy);
         const encryptedPwd = encrypt.encrypt(password);
         console.log(encryptedPwd);
-        //
-        // // Decrypt with the private key...
-        // const decrypt = new JSEncrypt();
-        // decrypt.setPrivateKey(privateKey);
-        // const uncrypted = decrypt.decrypt(encrypted);
+
         const formData = new FormData();
         formData.append("username", username);
         formData.append("password", encryptedPwd);
         fetch("http://localhost:8080/api/login", {
             method: "POST",
-
             body: formData,
         }).then(res => res.json())
             .then(res => {

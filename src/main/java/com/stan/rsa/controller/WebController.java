@@ -2,10 +2,9 @@ package com.stan.rsa.controller;
 
 import com.stan.rsa.utils.RSAUtil;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +15,7 @@ import java.util.Map;
  * @Date ：Created in 2020/4/1 3:56 下午
  * @Modified By：
  */
-@Controller
+@RestController
 public class WebController {
 
     @Value("${rsa.publicKey}")
@@ -25,18 +24,6 @@ public class WebController {
     @Value("${rsa.privateKey}")
     private String rsaPrivateKey;
 
-    @RequestMapping("/")
-    public String home() {
-        System.out.println("rsaPublicKey: " + rsaPublicKey);
-        return "index";
-    }
-
-    @RequestMapping("/test")
-    public String test() {
-        System.out.println("rsaPublicKey: " + rsaPublicKey);
-        return "test";
-    }
-
     /**
      * 登陆接口， 解密password
      * @param username
@@ -44,10 +31,11 @@ public class WebController {
      * @return
      */
     @RequestMapping("/api/login")
-    @ResponseBody
     public Object login(@RequestParam String username,
                         @RequestParam String password
     ) {
+        System.out.println("rsaPublicKey: " + rsaPublicKey);
+
         try {
             // 解密得到原始明文密码
             String originPwd = RSAUtil.decrypt(password, rsaPrivateKey);

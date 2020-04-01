@@ -2,11 +2,11 @@
 # RSA 加密解密， 前后端密码交互
 
 - 启动 ApplicationMain
-- 访问 <http://localhost:8080/>
+- 访问 <http://localhost:8080/login.html>
 - 登陆测试
 
 ## 前端
-> demo 位于 resources 目录下
+> demo 位于 resources/static 目录下
 
 获取jsencrypt.js
 - cdn
