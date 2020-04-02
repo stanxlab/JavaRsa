@@ -26,13 +26,14 @@ public class WebController {
 
     /**
      * 登陆接口， 解密password
+     *
      * @param username
      * @param password
      * @return
      */
     @RequestMapping("/api/login")
-    public Object login(@RequestParam String username,
-                        @RequestParam String password
+    public Object login(@RequestParam(required = false) String username,
+                        @RequestParam(required = false) String password
     ) {
         System.out.println("rsaPublicKey: " + rsaPublicKey);
 
@@ -42,7 +43,7 @@ public class WebController {
 
             Map<String, Object> res = new HashMap<>();
             res.put("code", 200);
-            res.put("msg", "解密ok") ;
+            res.put("msg", "解密ok");
             res.put("username", username);
             res.put("password", originPwd);
             return res;
@@ -52,7 +53,15 @@ public class WebController {
 
         Map<String, Object> res = new HashMap<>();
         res.put("code", -1);
-        res.put("msg", "解密失败") ;
+        res.put("msg", "解密失败");
+        return res;
+    }
+
+    @RequestMapping("/api/test")
+    public Object test() {
+        Map<String, Object> res = new HashMap<>();
+        res.put("code", 200);
+        res.put("msg", "test");
         return res;
     }
 }
