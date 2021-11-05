@@ -61,4 +61,14 @@ cat rsa_1024_pub.pem
 ```
 
 
+# JWT RSA 非对称加密的使用
+参考： <https://www.codeleading.com/article/9278493495/>
+
+@see com.stan.jwtdemo.JwtDemo.java
+
+这里的key 需要使用将 rsa_private.pem 转换
+```sh
+openssl pkcs8 -topk8 -inform PEM -in rsa_private.pem -outform pem -nocrypt -out pkcs8Private.key
+```
+
 
